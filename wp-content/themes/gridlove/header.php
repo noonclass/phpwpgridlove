@@ -7,6 +7,17 @@
 	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
 	<?php endif; ?>
 	<?php wp_head(); ?>
+    <!-- favicon -->
+    <link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/assets/img/favicon/favicon.png"/>
+    <!-- Standard iPhone -->
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="<?php echo get_template_directory_uri(); ?>/assets/img/favicon/favicon-57.png">
+    <!-- Retina iPhone -->
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo get_template_directory_uri(); ?>/assets/img/favicon/favicon-114.png">
+    <!-- Standard iPad --> 
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo get_template_directory_uri(); ?>/assets/img/favicon/favicon-72.png">
+    <!-- Retina iPad -->  
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php echo get_template_directory_uri(); ?>/assets/img/favicon/favicon-144.png">
+    <!-- /favicon -->
 </head>
 
 <body <?php body_class(); ?>>
