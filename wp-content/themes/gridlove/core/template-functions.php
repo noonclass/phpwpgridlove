@@ -439,9 +439,10 @@ if ( !function_exists( 'gridlove_get_format_icon' ) ):
 		$format = gridlove_get_post_format();
 
 		$icons = array(
-			'video' => 'fa-play',
+			'video' => 'fa-video-camera',
 			'audio' => 'fa-music',
-			'gallery' => 'fa-camera'
+			'gallery' => 'fa-camera',
+            'image' => 'fa-image' 
 		);
 
 		//Allow plugins or child themes to modify icons

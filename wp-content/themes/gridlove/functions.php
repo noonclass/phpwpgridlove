@@ -41,7 +41,7 @@ function gridlove_theme_setup() {
 	}
 
 	/* Add post formats support */
-	add_theme_support( 'post-formats', array( 'audio', 'gallery', 'video' ) );
+	add_theme_support( 'post-formats', array( 'video', 'audio', 'gallery', 'image' ) );
 
 	/* Support for HTML5 */
 	add_theme_support( 'html5', array( 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption' ) );
