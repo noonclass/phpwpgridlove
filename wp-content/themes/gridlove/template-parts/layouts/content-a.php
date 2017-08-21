@@ -3,6 +3,10 @@
     <?php if( $fimg = gridlove_get_featured_image( 'a'. $post_col ) ) : ?>
         <div class="entry-image">
             <a href="<?php echo esc_url( get_permalink() ); ?>" title="<?php echo esc_attr( get_the_title() ); ?>"><?php echo $fimg; ?></a>
+            <?php if( $meta = gridlove_get_author_meta_data('a') ) : ?>
+                <div class="entry-author"><?php echo $meta; ?></div>
+            <?php endif; ?>
+            
             <div class="entry-category">
                 <?php if( $icon = gridlove_get_option('lay_a_icon') ): ?>
                     <?php echo gridlove_get_format_icon(); ?>
@@ -17,9 +21,6 @@
 
 
     <div class="box-inner-p">
-        <div class="box-inner-ellipsis">
-            <?php the_title( sprintf( '<h2 class="entry-title h3"><a href="%s">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
-        </div>
         <?php if( $meta = gridlove_get_meta_data('a') ) : ?>
             <div class="entry-meta"><?php echo $meta; ?></div>
         <?php endif; ?>

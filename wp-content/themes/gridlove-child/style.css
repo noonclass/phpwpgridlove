@@ -7,3 +7,78 @@ Author URI:     http://mekshq.com
 Template:       gridlove
 Version:        0.1.0
 */
+
+/** Main Layouts - Layout A customized style **/
+.gridlove-post-a {
+    height: auto;
+    max-height: 370px;
+    overflow: hidden;
+}
+.gridlove-post-a .entry-image {
+    height: 370px;
+}
+.gridlove-post-a .entry-image img {
+	height: 100%;
+	width: 100%;
+	max-width: 100%;
+	display: block;
+}
+
+/* Archive Templates 首页文章 post-a 布局 author 作者头像 顶部左对齐 */
+.gridlove-post-a .entry-author {
+    position: absolute;
+    left: 30px;
+    top: 30px;
+    width: auto;
+    z-index: 2;
+}
+.gridlove-post-a .entry-author .meta-item {
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+.gridlove-post-a  .entry-author .meta-item a {
+    color: #fff;
+    font-size: 12px;
+    line-height: 18px;
+}
+.gridlove-post-a  .entry-author  .meta-item img {
+    display: inline-block;
+    width: 24px;
+}
+
+/* Archive Templates 首页文章 post-a 布局 cate&format 文章目录及格式 顶部右对齐 */
+.gridlove-post-a .entry-category {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    width: auto;
+    z-index: 2;
+}
+.gridlove-post-a .entry-category > * {
+    float: right;
+}
+
+/* Archive Templates 首页文章 post-a 布局 meta 元信息 底部左对齐 */
+.gridlove-post-a  .box-inner-p {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+.gridlove-post-a  .entry-meta {
+    position: static;/*默认值，元素使用正常的布局行为，即元素在文档流中当前的布局位置。静态定位的元素不会受到 top, bottom, left, right, z-index 影响。*/
+}
+.gridlove-post-a .entry-meta .meta-likes span::before {
+    color: #fff;
+}
+.gridlove-post-a  .entry-meta .meta-item > * {
+    color: #fff;
+    opacity: 0.67;
+}
+.entry-meta .meta-likes span::before {
+    font-family: FontAwesome;
+    margin-right: 4px;
+    color: #818181;
+}
+

@@ -401,6 +401,7 @@ if ( !function_exists( 'gridlove_get_meta_opts' ) ):
 		$options['author'] = esc_html__( 'Author', 'gridlove' );
 		$options['date'] = esc_html__( 'Date', 'gridlove' );
 		$options['comments'] = esc_html__( 'Comments', 'gridlove' );
+        $options['likes'] = esc_html__( 'Likes', 'gridlove' );
 		$options['views'] = esc_html__( 'Views', 'gridlove' );
 		$options['rtime'] = esc_html__( 'Reading time', 'gridlove' );
 
