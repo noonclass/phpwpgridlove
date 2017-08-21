@@ -1,0 +1,1 @@
+<span class="gridlove-site-description"><?php bloginfo( 'description' ); ?></span>
