@@ -322,6 +322,40 @@ function gridlove_get_comment_avatar($avatar, $comment, $size, $default, $alt)
 add_filter("get_avatar" , "gridlove_get_comment_avatar" , 10, 5);
 
 /**
+ * Get post format icon
+ *
+ * Checks format of current post and returns its icon
+ *
+ * @param string  $size Icon size class
+ * @return string Icon HTML output
+ * @since  1.0
+ */
+
+if ( !function_exists( 'gridlove_get_format_icon' ) ):
+	function gridlove_get_format_icon() {
+
+		$format = gridlove_get_post_format();
+
+		$icons = array(
+			'video' => 'sprite-video',
+			'audio' => 'sprite-audio',
+			'gallery' => 'sprite-gallery',
+            'image' => 'sprite-image' 
+		);
+
+		//Allow plugins or child themes to modify icons
+		$icons = apply_filters( 'gridlove_modify_post_format_icons', $icons );
+
+		if ( $format && array_key_exists( $format, $icons ) ) {
+
+			return wp_kses_post( '<span class="gridlove-format-icon '.esc_attr( $icons[$format] ).'"></span>' );
+		}
+
+		return '';
+	}
+endif;
+
+/**
  * comments navigation
  */
 if(!function_exists('gridlove_get_comment_nav')) :

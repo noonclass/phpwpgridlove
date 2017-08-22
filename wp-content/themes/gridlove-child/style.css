@@ -88,13 +88,27 @@ body {
 /* Archive Templates 首页文章 post-a 布局 cate&format 文章目录及格式 顶部右对齐 */
 .gridlove-post-a .entry-category {
     position: absolute;
-    right: 30px;
-    top: 30px;
+    right: 18px;
+    top: 18px;
     width: auto;
     z-index: 2;
 }
 .gridlove-post-a .entry-category > * {
     float: right;
+}
+.gridlove-post-a .gridlove-format-icon {
+    background-color: transparent;
+    background-image: url("assets/img/sprite.png");
+    background-position: -355px 0;
+    background-repeat: no-repeat;
+    height: 48px;
+    width: 48px;
+}
+.gridlove-post-a .sprite-video{
+   background-position: -301px -288px;
+}
+.gridlove-post-a .sprite-gallery{
+    background-position: -355px -50px;
 }
 
 /* Archive Templates 首页文章 post-a 布局 meta 元信息 底部左对齐 */
