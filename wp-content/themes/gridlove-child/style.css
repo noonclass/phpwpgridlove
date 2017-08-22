@@ -130,3 +130,36 @@ body {
 #comments .reply{display:none;}
 #comments .edit-link{display:none;}
 
+/* สำฦต  */
+.box-single .owl-video {
+    width: 100%!important;
+    height: 100%!important;
+    max-width: 620px;
+}
+
+/** gallery images **/
+a.wplightbox {
+    display: block;
+    position: relative;
+}
+.portfolio-more {
+	width: 100%;
+	height: 100%;
+	background: url(box-hover.png) no-repeat center;
+	display: block;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 10;
+	opacity: 0;
+	filter: alpha(opacity =   0);
+}
+
+.portfolio-more .portfolio-icon {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	background: url(box-hover-plus.png) no-repeat center;
+}

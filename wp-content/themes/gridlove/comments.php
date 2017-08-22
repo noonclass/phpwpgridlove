@@ -12,7 +12,7 @@
 
 			//echo '<h4 class="h2">'.$comments_title.'</h4>';
 /*
-            // 原主题导航，为了ias效果去掉了，使用下面的gridlove_get_comment_nav()
+            // 鍘熶富棰樺鑸紝涓轰簡ias鏁堟灉鍘绘帀浜嗭紝浣跨敤涓嬮潰鐨刧ridlove_get_comment_nav()
 			echo gridlove_get_heading(
 				array(
 					'title' => '<h4 class="h2">'.$comments_title.'</h4>',
