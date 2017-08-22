@@ -9,7 +9,7 @@
 	    <?php endif; ?>
 	</div>
 
-    <?php gridlove_the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+    <?php //gridlove_the_title( '<h1 class="entry-title">', '</h1>' ); ?>
 
     <?php if( $meta = gridlove_get_meta_data('single') ) : ?>
     	<div class="entry-meta"><?php echo $meta; ?></div>
