@@ -409,4 +409,154 @@ endif;
 add_action('wp_ajax_nopriv_ajax_comment', 'gridlove_ajax_comment_callback');
 add_action('wp_ajax_ajax_comment', 'gridlove_ajax_comment_callback');
 
+/* Remove comment-reply.min.js (header hook)
+/* ------------------------------------- */
+function gridlove_del_comment_reply(){
+    wp_deregister_script( 'comment-reply' );
+}
+add_action('init','gridlove_del_comment_reply');
+
+
+/* Description: Customized configuration for wordpress
+ * Description: 定制WP的核心配置
+ * Author: 萌える動 • 萌动网
+ * Author URI: http://moemob.com
+/* -------------------------------------------------------------------------- */
+// Say goodbye to autosave feature!
+add_action('wp_print_scripts','disable_autosave');
+function disable_autosave(){  
+    wp_deregister_script('autosave'); 
+}
+
+// Disable revisioning feature!
+add_filter( 'wp_revisions_to_keep', 'disable_revisions', 10, 2 );
+function disable_revisions( $num, $post ) {
+    return 0;
+}
+
+// Disable Feed/RSS feature!
+function disable_feed() {
+	wp_die(__('<h1>Oops! That page can\'t be found.</h1>'));
+}
+add_action('do_feed',      'disable_feed', 1);
+add_action('do_feed_rdf',  'disable_feed', 1);
+add_action('do_feed_rss',  'disable_feed', 1);
+add_action('do_feed_rss2', 'disable_feed', 1);
+add_action('do_feed_atom', 'disable_feed', 1);
+
+// Remove admin bar at front
+add_filter( 'show_admin_bar', '__return_false' );
+
+// Optmize header metas feature!
+head_optmizer();
+function head_optmizer() {
+    $wpho_option_values = array(
+        '_emoji' => 1,
+        '_canonical' => 1,
+        '_wp_version' => 1,
+        '_shortlink' => 1,
+        '_rss_feed' => 1,
+        '_edituri' => 1,
+        '_jsonapi' => 1,
+        '_ss_vesions' => 1,
+        '_wlwmanifest' => 1,
+        '_np_urls' => 1,//Next/Previous Post URLs Links
+        '_restapi_link' => 1,
+        '_oembed_desc_link' => 1,
+    );
+	
+    //Disable WP Emoji
+    if($wpho_option_values['_emoji'] == 1){
+        
+        // remove actions / filters related to emojis
+        remove_action( 'admin_print_styles', 'print_emoji_styles' );
+        remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+        remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
+        remove_action( 'wp_print_styles', 'print_emoji_styles' );
+        remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
+        remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
+        remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
+        
+        // added filter to remove TinyMCE emojis as well
+        add_filter( 'tiny_mce_plugins', 'disable_wp_emojicons_tinymce' );	
+    }
+    
+    //Remove Canonical URL
+    if($wpho_option_values['_canonical'] == 1){
+        remove_action('wp_head', 'rel_canonical');
+    }
+    
+    
+    //Remove WordPress Version			
+    if($wpho_option_values['_wp_version'] == 1){
+        remove_action('wp_head', 'wp_generator');
+    }
+    
+    //Remove Shortlink		
+    if($wpho_option_values['_shortlink'] == 1){
+        remove_action('wp_head', 'wp_shortlink_wp_head');
+    }
+    
+    //Remove RSS Feed URL		
+    if($wpho_option_values['_rss_feed'] == 1){
+        remove_action( 'wp_head', 'feed_links_extra', 3 ); //Extra feeds such as category feeds
+        remove_action( 'wp_head', 'feed_links', 2 ); // General feeds: Post and Comment Feed
+    }
+    
+    //Remove EditURI		
+    if($wpho_option_values['_edituri'] == 1){
+        remove_action ('wp_head', 'rsd_link');
+    }
+    
+    //Disable JSON API		
+    if($wpho_option_values['_jsonapi'] == 1){
+        add_filter('json_enabled', '__return_false');
+        add_filter('json_jsonp_enabled', '__return_false');
+    }
+    
+    
+    //Remove Style and Script Versions
+    if($wpho_option_values['_ss_vesions'] == 1){
+        add_filter( 'style_loader_src', 'remove_ver_css_js', 9999 );
+        add_filter( 'script_loader_src', 'remove_ver_css_js', 9999 );
+    }
+    
+    //Remove WLW Manifest
+    if($wpho_option_values['_wlwmanifest'] == 1){
+        remove_action( 'wp_head', 'wlwmanifest_link');
+    }
+    
+    //Remove Next/Previous Post URLs Links
+    if($wpho_option_values['_np_urls'] == 1){
+        remove_action('wp_head', 'adjacent_posts_rel_link_wp_head');
+    }
+    
+    //Remove REST API link tags
+    if($wpho_option_values['_restapi_link'] == 1){
+        remove_action('wp_head', 'rest_output_link_wp_head', 10);
+    }
+    
+    // Remove oEmbed Discovery Links
+    if($wpho_option_values['_oembed_desc_link'] == 1){
+        remove_action('wp_head', 'wp_oembed_add_discovery_links', 10);
+    }
+}
+
+function remove_ver_css_js( $src ) {
+	if ( strpos( $src, 'ver=' ) )
+		$src = remove_query_arg( 'ver', $src );
+	return $src;
+}
+
+// Custom uploads
+function custom_upload_directory( $uploads ) {
+    date_default_timezone_set("Asia/Shanghai");//Time Zone
+    $subdir = date("Y");//Format Set
+    $uploads['subdir'] = $subdir;
+    $uploads['path'] = $uploads['basedir'].DIRECTORY_SEPARATOR.$subdir;
+    $uploads['url'] = $uploads['baseurl'].'/'.$subdir;
+    return $uploads;
+}
+add_filter( 'upload_dir', 'custom_upload_directory' );
+
 ?>

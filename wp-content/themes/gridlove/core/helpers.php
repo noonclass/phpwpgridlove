@@ -1348,8 +1348,8 @@ endif;
 if ( !function_exists( 'gridlove_get_prev_next_posts' ) ):
 	function gridlove_get_prev_next_posts() {
 
-		$prev = get_adjacent_post( true, '', false, 'category' );
-		$next = get_adjacent_post( true, '', true, 'category' );
+		$prev = get_adjacent_post( false, '', false, 'category' );
+		$next = get_adjacent_post( false, '', true, 'category' );
 
 		return array( 'prev' => $prev, 'next' => $next );
 
