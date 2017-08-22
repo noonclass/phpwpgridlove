@@ -9,7 +9,7 @@
             __list = 'comment-list';//your comment wrapprer
         $(document).on("submit", "#commentform", function() {
             $.ajax({
-                url: wp_js_settings.ajax_url,
+                url: child_js_settings.ajax_url,
                 data: $(this).serialize() + "&action=ajax_comment",
                 type: $(this).attr('method'),
                 beforeSend: addComment.createButterbar("submit...."),
@@ -30,14 +30,14 @@
                     if (parent != '0') {
                         $('#respond').before('<ol class="children">' + data + '</ol>');
                     } else if (!$('.' + __list ).length) {
-                        if (wp_js_settings.comment_form == 'bottom') {
+                        if (child_js_settings.comment_form == 'bottom') {
                             $('#respond').before('<ol class="' + __list + '">' + data + '</ol>');
                         } else {
                             $('#respond').after('<ol class="' + __list + '">' + data + '</ol>');
                         }
 
                     } else {
-                        if (wp_js_settings.comment_order == 'asc') {
+                        if (child_js_settings.comment_order == 'asc') {
                             $('.' + __list ).append(data); // your comments wrapper
                         } else {
                             $('.' + __list ).prepend(data); // your comments wrapper

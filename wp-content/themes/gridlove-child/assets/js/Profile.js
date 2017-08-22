@@ -6,8 +6,8 @@
     $(document).ready(function () {
         /************************************/
         var ias;
-        if (wp_js_settings.current != null){
-            if(wp_js_settings.current == 'index'){
+        if (child_js_settings.current != null){
+            if(child_js_settings.current == 'index'){
                 console.log("ias init....");
                 var ias = $.ias({
                     container: '.gridlove-posts',
@@ -16,7 +16,7 @@
                     next: ".gridlove-pagination a",
                 });
             }
-            if(wp_js_settings.current == 'single'){
+            if(child_js_settings.current == 'single'){
                 var ias = $.ias({
                     container: '.comment-list',
                     item: '.comment',
@@ -72,7 +72,7 @@
             });
             
             $('a.lightbox-image').each(function(){
-                $(this).append('<div class="portfolio-more"><div class="portfolio-icon"></div></div>');
+                $(this).append('<div class="butter-more"><div class="butter-icon"></div></div>');
             });
             
             //set the hover animation to the gallery images
@@ -94,12 +94,12 @@
         },
         
         doOnImageMouseenter:function(){
-            pexetoSite.elemFadeIn($(this).find('.portfolio-more'));
+            pexetoSite.elemFadeIn($(this).find('.butter-more'));
             pexetoSite.elemFadeOut($(this).find('img'), 0.8);
         },
         
         doOnImageMouseleave:function(){
-            pexetoSite.elemFadeOut($(this).find('.portfolio-more'), 0);
+            pexetoSite.elemFadeOut($(this).find('.butter-more'), 0);
             pexetoSite.elemFadeIn($(this).find('img'));
         },
         

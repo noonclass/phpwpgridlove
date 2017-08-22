@@ -150,10 +150,10 @@ a.wplightbox {
     display: block;
     position: relative;
 }
-.portfolio-more {
+.butter-more {
 	width: 100%;
 	height: 100%;
-	background: url(box-hover.png) no-repeat center;
+	background: url(assets/img/box_hover.png) no-repeat center;
 	display: block;
 	position: absolute;
 	top: 0px;
@@ -163,11 +163,11 @@ a.wplightbox {
 	filter: alpha(opacity =   0);
 }
 
-.portfolio-more .portfolio-icon {
+.butter-more .butter-icon {
 	width: 100%;
 	height: 100%;
 	position: absolute;
 	top: 0px;
 	left: 0px;
-	background: url(box-hover-plus.png) no-repeat center;
+	background: url(assets/img/box_hover_plus.png) no-repeat center;
 }

@@ -11,12 +11,34 @@ function gridlove_child_theme_setup(){
 	add_action('wp_enqueue_scripts', 'gridlove_child_load_scripts');
 }
 
-function gridlove_child_load_scripts() {	
-	wp_register_style('gridlove_child_load_scripts', trailingslashit(get_stylesheet_directory_uri()).'style.css', false, GRIDLOVE_THEME_VERSION, 'screen');
-	wp_enqueue_style('gridlove_child_load_scripts');
+function gridlove_child_load_scripts() {
+    //Check if is minified option active and load appropriate files
+	if ( gridlove_get_option( 'minify_css' ) ) {
+		wp_enqueue_style( 'gridlove-child', trailingslashit(get_stylesheet_directory_uri()).'assets/css/min.css', false, GRIDLOVE_THEME_VERSION );
+        
+    }else{
+        wp_register_style('gridlove_child_load_scripts', trailingslashit(get_stylesheet_directory_uri()).'style.css', false, GRIDLOVE_THEME_VERSION, 'screen');
+        wp_enqueue_style('gridlove_child_load_scripts');
+        
+        wp_register_style('jquery-mCustomScrollbar', trailingslashit(get_stylesheet_directory_uri()).'assets/css/jquery.mCustomScrollbar.min.css', false);
+        wp_enqueue_style( 'jquery-mCustomScrollbar');
+    }
     
-    gridlove_ality_scripts();
-    wp_localize_script( 'jquery-ias', 'wp_js_settings', gridlove_ality_settings() );
+    // load jquery 3.x, not 1.x in wordpress by default
+    wp_deregister_script( 'jquery' );
+    wp_register_script( 'jquery', trailingslashit(get_stylesheet_directory_uri()).'assets/js/jquery.min.js' , false, '3.2.1', false );
+    wp_enqueue_script( 'jquery' );
+    
+    //Check if is minified option active and load appropriate files
+	if ( gridlove_get_option( 'minify_js' ) ) {
+        
+		wp_enqueue_script( 'gridlove-child', trailingslashit(get_stylesheet_directory_uri()).'assets/js/min.js', array( 'jquery' ), GRIDLOVE_THEME_VERSION, true );
+        
+	}else{
+    	gridlove_ality_scripts();
+    }
+    
+    wp_localize_script( 'gridlove-child', 'child_js_settings', gridlove_ality_settings() );
 }
 
 
@@ -27,24 +49,19 @@ Add by moemob.com
 /* ------------------------------------- */
 if ( !function_exists( 'gridlove_ality_scripts' ) ):
     function gridlove_ality_scripts() {
-        wp_deregister_script( 'jquery' );
-        wp_register_script( 'jquery', trailingslashit(get_stylesheet_directory_uri()).'jquery.min.js' , false, '3.2.1', false );
-        wp_enqueue_script( 'jquery' );
-        
         // infinite-ajax-scroll, short for ias
-        wp_register_script( 'jquery-ias', trailingslashit(get_stylesheet_directory_uri()).'jquery-ias.js' , array('jquery'), '2.2.3', false );
+        wp_register_script( 'jquery-ias', trailingslashit(get_stylesheet_directory_uri()).'assets/js/jquery-ias.js' , array('jquery'), '2.2.3', true );
         wp_enqueue_script( 'jquery-ias' );
         
-        wp_enqueue_style( 'jquery-mCustomScrollbar', trailingslashit(get_stylesheet_directory_uri()).'jquery.mCustomScrollbar.min.css',true );
-        wp_register_script( 'jquery-mCustomScrollbar', trailingslashit(get_stylesheet_directory_uri()).'jquery.mCustomScrollbar.concat.min.js' , array('jquery'), '3.1.5', true );
+        wp_register_script( 'jquery-mCustomScrollbar', trailingslashit(get_stylesheet_directory_uri()).'assets/js/jquery.mCustomScrollbar.concat.min.js' , array('jquery'), '3.1.5', true );
         wp_enqueue_script( 'jquery-mCustomScrollbar' );
         
-        wp_register_script( 'jquery-profile', trailingslashit(get_stylesheet_directory_uri()).'Profile.js' , array('jquery'), '1.0.0', false );
-        wp_enqueue_script( 'jquery-profile' );
+        wp_register_script( 'gridlove-child', trailingslashit(get_stylesheet_directory_uri()).'assets/js/Profile.js' , array('jquery'), '1.0.0', true );
+        wp_enqueue_script( 'gridlove-child' );
         
         if( is_single()) {
             // NOTE:: 不支持wordpress原生的jquery.min.js?ver=1.12.4
-            wp_register_script('jquery-comment', trailingslashit(get_stylesheet_directory_uri()).'Comment.js', array('jquery'), '1.1.0', true);
+            wp_register_script('jquery-comment', trailingslashit(get_stylesheet_directory_uri()).'assets/js/Comment.js', array('jquery'), '1.1.0', true);
             wp_enqueue_script('jquery-comment');
         }
     }
@@ -155,7 +172,7 @@ if ( !function_exists( 'gridlove_the_title' ) ):
         /* NOTE::也可以使用nl2br()/nl2p()函数进行转换 */
         $title = str_replace("\n", "<br />", $title);
         $title = $before . $title . $after;
-        error_log(print_r($title,1));
+
         if ( $echo ) {
             echo wp_kses_post( $title );
         }
@@ -539,6 +556,7 @@ function head_optmizer() {
     // Remove oEmbed Discovery Links
     if($wpho_option_values['_oembed_desc_link'] == 1){
         remove_action('wp_head', 'wp_oembed_add_discovery_links', 10);
+        remove_action('wp_head', 'wp_oembed_add_host_js');//remove wp-embed.min.js
     }
 }
 
