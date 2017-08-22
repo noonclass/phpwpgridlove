@@ -14,9 +14,43 @@ function gridlove_child_theme_setup(){
 function gridlove_child_load_scripts() {	
 	wp_register_style('gridlove_child_load_scripts', trailingslashit(get_stylesheet_directory_uri()).'style.css', false, GRIDLOVE_THEME_VERSION, 'screen');
 	wp_enqueue_style('gridlove_child_load_scripts');
+    
+    gridlove_ality_scripts();
+    wp_localize_script( 'jquery-mCommentSubmit', 'wp_js_settings', gridlove_ality_settings() );
 }
 
 
+/*
+Add by moemob.com
+*/
+/* Add js/css - 加载功能性脚本
+/* ------------------------------------- */
+if ( !function_exists( 'gridlove_ality_scripts' ) ):
+    function gridlove_ality_scripts() {
+        wp_deregister_script( 'jquery' );
+        wp_register_script( 'jquery', trailingslashit(get_stylesheet_directory_uri()).'jquery.min.js' , false, '3.2.1', false );
+        wp_enqueue_script( 'jquery' );
+        
+        if( is_single()) {
+            // NOTE:: 不支持wordpress原生的jquery.min.js?ver=1.12.4
+            wp_register_script('jquery-mCommentSubmit', trailingslashit(get_stylesheet_directory_uri()).'jquery.mCommentSubmit.js', array('jquery'), '1.1.0', true);
+            wp_enqueue_script('jquery-mCommentSubmit');
+        }
+    }
+endif;
+
+if ( !function_exists( 'gridlove_ality_settings' ) ):
+	function gridlove_ality_settings() {
+		$js_settings = array();
+        
+        // comment submit
+		$js_settings['ajax_url'] = admin_url('admin-ajax.php');
+        $js_settings['comment_form'] = 'top'; //默认为top，如果你的表单在底部则设置为bottom。
+        $js_settings['comment_order'] = get_option('comment_order');
+
+		return $js_settings;
+	}
+endif;
 
 /**
  * Get featured image
@@ -97,9 +131,9 @@ endif;
 if ( !function_exists( 'gridlove_the_title' ) ):
 	function gridlove_the_title( $before = '', $after = '', $echo = true ) {       
         $title = get_the_title();
-        /* NOTE::���е�ת��ֻ����˫�����У���������php��ֻ���ַ����� */
+        /* NOTE::所有的转移只存在双引号中，单引号在php中只做字符处理 */
         //$title = str_replace('\n', '<br />', $title);//ERR
-        /* NOTE::Ҳ����ʹ��nl2br()/nl2p()��������ת�� */
+        /* NOTE::也可以使用nl2br()/nl2p()函数进行转换 */
         $title = str_replace("\n", "<br />", $title);
         $title = $before . $title . $after;
         error_log(print_r($title,1));
@@ -250,5 +284,86 @@ function gridlove_get_comment_avatar($avatar, $comment, $size, $default, $alt)
 }
 
 add_filter("get_avatar" , "gridlove_get_comment_avatar" , 10, 5);
+
+/**
+ * AJAX comment
+ * 
+ * AJAX评论需4.4以上版本
+ *
+ * @since  1.0
+ */
+
+function gridlove_set_comment_form_defaults( $defaults ) {
+	$defaults['action'] = '';
+	return $defaults;
+}
+
+add_filter( 'comment_form_defaults', 'gridlove_set_comment_form_defaults' );
+
+if ( version_compare( $GLOBALS['wp_version'], '4.4-alpha', '<' ) ) {
+	wp_die('Please upgrade wordpress to version 4.4 or above.');
+}
+
+if(!function_exists('gridlove_ajax_comment_err')) :
+
+    function gridlove_ajax_comment_err($a) {
+        header('HTTP/1.0 500 Internal Server Error');
+        header('Content-Type: text/plain;charset=UTF-8');
+        echo $a;
+        exit;
+    }
+
+endif;
+
+if(!function_exists('gridlove_ajax_comment_callback')) :
+
+    function gridlove_ajax_comment_callback(){
+        $comment = wp_handle_comment_submission( wp_unslash( $_POST ) );
+        if ( is_wp_error( $comment ) ) {
+            $data = $comment->get_error_data();
+            if ( ! empty( $data ) ) {
+            	gridlove_ajax_comment_err($comment->get_error_message());
+            } else {
+                exit;
+            }
+        }
+        $user = wp_get_current_user();
+        do_action('set_comment_cookies', $comment, $user);
+        $GLOBALS['comment'] = $comment; //根据你的评论结构自行修改，如使用默认主题则无需修改
+        ?>
+        <li <?php comment_class(); ?> id="comment-<?php comment_ID() ?>">
+          <article id="div-comment-<?php comment_ID(); ?>" class="comment-body">
+            <footer class="comment-meta">
+              <div class="comment-author vcard">
+                <?php echo get_avatar( $comment, 50 ); ?>
+                <b class="fn"><?php comment_author();?></b>
+                <span class="says">says:</span>
+              </div>
+              <div class="comment-metadata">
+              <?php $cpage = get_page_of_comment(); $url=''; if(isset($cpage)){$url .= 'comment-page-'.$cpage.'/';} $url .= '#comment-'.get_comment_ID(); ?>
+                <a href="<?php echo $url; ?>">
+                    <time datetime="<?php comment_time(); ?>"><?php printf( __('%1$s at %2$s'), get_comment_date( 'F j, Y' ),  get_comment_time() ); ?></time>
+                </a>
+                <span class="edit-link">
+                    <?php edit_comment_link( 'Edit' , '&nbsp;', '' ); ?>
+                </span>
+              </div>
+            </footer>
+            <div class="comment-content">
+                <?php comment_text(); ?>
+            </div>
+            <?php comment_reply_link( array_merge( $args, array( 'add_below' => $add_below, 'depth' => $depth, 'max_depth' => $args['max_depth'] ) ) ); ?>
+            <?php if ( $comment->comment_approved == '0' ) : ?>
+                <div class="comment-awaiting-moderation">Your comment is awaiting moderation.</div>
+            <?php endif; ?>
+          </article>
+        </li>
+        <?php die();
+    }
+
+endif;
+
+add_action('wp_ajax_nopriv_ajax_comment', 'gridlove_ajax_comment_callback');
+add_action('wp_ajax_ajax_comment', 'gridlove_ajax_comment_callback');
 
 ?>
