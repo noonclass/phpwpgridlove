@@ -106,7 +106,7 @@
                 var t = this;
                 t.clearButterbar();
                 $("body").append('<div class="butter-bar butter-bar-center"><p class="butter-bar-message">' + message + '</p></div>');
-                //setTimeout("$('.butter-bar').remove()", 3000);
+                setTimeout("$('.butter-bar').remove()", 3000);
             }
         };
         

@@ -11,14 +11,17 @@
 			ob_end_clean();
 
 			//echo '<h4 class="h2">'.$comments_title.'</h4>';
-
+/*
+            // 原主题导航，为了ias效果去掉了，使用下面的gridlove_get_comment_nav()
 			echo gridlove_get_heading(
 				array(
 					'title' => '<h4 class="h2">'.$comments_title.'</h4>',
 					'actions' => get_comment_pages_count() > 1 && get_option( 'page_comments' ) ? paginate_comments_links( array( 'echo' => false, 'prev_text' => '<i class="fa fa-chevron-left"></i>', 'next_text' => '<i class="fa fa-chevron-right"></i>', 'type' => 'list'  ) ) : ''
 				)
 			);
-	
+*/
+			echo '<div class="module-header"><div class="module-title"><h4 class="h2">'.$comments_title.'</h4><div class="module-actions"><a class="respond-switch" href="javascript:void(0);">add a comment</a></div></div></div>';
+
 			comment_form(
 				array(
 					'title_reply' => '',
@@ -37,6 +40,9 @@
 				'reply_text' => __gridlove( 'comment_reply' )
 			); ?>
 				<?php wp_list_comments( $args ); ?>
+
+				<?php echo gridlove_get_comment_nav(); ?>
+
 			</ul>
 		<?php endif; ?>
 

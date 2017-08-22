@@ -16,7 +16,7 @@ function gridlove_child_load_scripts() {
 	wp_enqueue_style('gridlove_child_load_scripts');
     
     gridlove_ality_scripts();
-    wp_localize_script( 'jquery-mCommentSubmit', 'wp_js_settings', gridlove_ality_settings() );
+    wp_localize_script( 'jquery-ias', 'wp_js_settings', gridlove_ality_settings() );
 }
 
 
@@ -31,10 +31,21 @@ if ( !function_exists( 'gridlove_ality_scripts' ) ):
         wp_register_script( 'jquery', trailingslashit(get_stylesheet_directory_uri()).'jquery.min.js' , false, '3.2.1', false );
         wp_enqueue_script( 'jquery' );
         
+        // infinite-ajax-scroll, short for ias
+        wp_register_script( 'jquery-ias', trailingslashit(get_stylesheet_directory_uri()).'jquery-ias.js' , array('jquery'), '2.2.3', false );
+        wp_enqueue_script( 'jquery-ias' );
+        
+        wp_enqueue_style( 'jquery-mCustomScrollbar', trailingslashit(get_stylesheet_directory_uri()).'jquery.mCustomScrollbar.min.css',true );
+        wp_register_script( 'jquery-mCustomScrollbar', trailingslashit(get_stylesheet_directory_uri()).'jquery.mCustomScrollbar.concat.min.js' , array('jquery'), '3.1.5', true );
+        wp_enqueue_script( 'jquery-mCustomScrollbar' );
+        
+        wp_register_script( 'jquery-profile', trailingslashit(get_stylesheet_directory_uri()).'Profile.js' , array('jquery'), '1.0.0', false );
+        wp_enqueue_script( 'jquery-profile' );
+        
         if( is_single()) {
             // NOTE:: 不支持wordpress原生的jquery.min.js?ver=1.12.4
-            wp_register_script('jquery-mCommentSubmit', trailingslashit(get_stylesheet_directory_uri()).'jquery.mCommentSubmit.js', array('jquery'), '1.1.0', true);
-            wp_enqueue_script('jquery-mCommentSubmit');
+            wp_register_script('jquery-comment', trailingslashit(get_stylesheet_directory_uri()).'Comment.js', array('jquery'), '1.1.0', true);
+            wp_enqueue_script('jquery-comment');
         }
     }
 endif;
@@ -47,6 +58,14 @@ if ( !function_exists( 'gridlove_ality_settings' ) ):
 		$js_settings['ajax_url'] = admin_url('admin-ajax.php');
         $js_settings['comment_form'] = 'top'; //默认为top，如果你的表单在底部则设置为bottom。
         $js_settings['comment_order'] = get_option('comment_order');
+        
+        // ias
+        if ( (is_home() || is_front_page() || is_category() || is_tag() || is_author() || is_search() || is_archive()) && !is_paged() ){// 是否为列表页(Posts)
+            $js_settings['current'] = 'index';
+        }
+        if ( is_single() ){// 是否为内容页(Post)
+            $js_settings['current'] = 'single';
+        }
 
 		return $js_settings;
 	}
@@ -284,6 +303,30 @@ function gridlove_get_comment_avatar($avatar, $comment, $size, $default, $alt)
 }
 
 add_filter("get_avatar" , "gridlove_get_comment_avatar" , 10, 5);
+
+/**
+ * comments navigation
+ */
+if(!function_exists('gridlove_get_comment_nav')) :
+    function gridlove_get_comment_nav(){
+        $output = '';
+        $output .= '<nav class="navigation comment-navigation" role="navigation">';
+        $output .= '<div class="nav-links">';
+		
+        if ( $prev_link = get_previous_comments_link( '<i class="fa fa-chevron-left"></i>' ) ) :
+            $output .= sprintf( '<div class="nav-previous">%s</div>', $prev_link );
+        endif;
+
+        if ( $next_link = get_next_comments_link( '<i class="fa fa-chevron-right"></i>' ) ) :
+            $output .= sprintf( '<div class="nav-next">%s</div>', $next_link );
+        endif;
+		
+		$output .= '</div><!-- .nav-links -->';
+        $output .= '</nav><!-- .comment-navigation -->';
+        
+        return $output;
+    }
+endif;
 
 /**
  * AJAX comment

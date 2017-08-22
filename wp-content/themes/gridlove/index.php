@@ -23,7 +23,7 @@
                     <?php if( $i == count( $grid ) ) { $i = $base; } ?>
 
                     <?php $post_col = $grid[$i]['col']; ?>
-    		        <div class="<?php echo esc_attr( gridlove_get_bootstrap_columns( $post_col ) ); ?>">
+    		        <div class="<?php echo esc_attr( gridlove_get_bootstrap_columns( $post_col ) ); ?> gridlove-entry">
                         <?php include( locate_template('template-parts/layouts/content-'. $grid[$i]['layout'].'.php') ); ?>
     		        </div>
 
