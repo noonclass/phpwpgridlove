@@ -157,7 +157,7 @@ class GRIDLOVE_Posts_Widget extends WP_Widget {
 		            <?php endif; ?>
 
 		            <div class="entry-header">
-		                <?php the_title( sprintf( '<h6><a href="%s">', esc_url( get_permalink() ) ), '</a></h6>' );  ?>
+		                <?php gridlove_the_title( sprintf( '<h6><a href="%s">', esc_url( get_permalink() ) ), '</a></h6>' );  ?>
 		                <?php if(!empty($instance['meta']) && $meta = gridlove_get_meta_data( false, $instance['meta']) ) : ?>
 		                	<div class="entry-meta"><?php echo $meta; ?></div>
 		            	<?php endif; ?>

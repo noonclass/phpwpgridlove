@@ -86,6 +86,32 @@ endif;
 
 
 /**
+ * Get title with <br /> instead of \n
+ *
+ * Function outputs title HTML
+ *
+ * @return string HTML output of title
+ * @since  1.0
+ */
+
+if ( !function_exists( 'gridlove_the_title' ) ):
+	function gridlove_the_title( $before = '', $after = '', $echo = true ) {       
+        $title = get_the_title();
+        /* NOTE::所有的转移只存在双引号中，单引号在php中只做字符处理 */
+        //$title = str_replace('\n', '<br />', $title);//ERR
+        /* NOTE::也可以使用nl2br()/nl2p()函数进行转换 */
+        $title = str_replace("\n", "<br />", $title);
+        $title = $before . $title . $after;
+        error_log(print_r($title,1));
+        if ( $echo ) {
+            echo wp_kses_post( $title );
+        }
+        
+        return wp_kses_post( $title );
+	}
+endif;
+
+/**
  * Get author meta data
  *
  * Function outputs meta data HTML
@@ -192,5 +218,37 @@ if ( !function_exists( 'gridlove_get_meta_data' ) ):
 
 	}
 endif;
+
+/**
+ * Get comment avatar only on comments template. 
+ *
+ * Function outputs avatar HTML based on wp_commentmeta
+ *
+ * @param string $avatar   
+ * @param (integer/string/object) $id_or_email with most comment templates you can use $comment here
+ * @return string HTML output of avatar
+ * @since  1.0
+ */
+
+function gridlove_get_comment_avatar($avatar, $comment, $size, $default, $alt)
+{
+    global $in_comment_loop;
+
+    if(isset($in_comment_loop))
+    {
+        if($in_comment_loop == true)
+        {
+            $meta = get_comment_meta( $comment->comment_ID, 'si_avatar', true );
+            if (!empty($meta)) {
+                $avatar = "<img alt='{$alt}' class='avatar avatar-{$size} photo avatar-default' alt='' src='".$meta."' srcset='".$meta." 2x' width='{$size}' height='{$size}'>";
+            }
+            return $avatar;
+        }
+    }
+    
+    return $avatar;
+}
+
+add_filter("get_avatar" , "gridlove_get_comment_avatar" , 10, 5);
 
 ?>

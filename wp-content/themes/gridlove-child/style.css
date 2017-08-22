@@ -7,6 +7,24 @@ Author URI:     http://mekshq.com
 Template:       gridlove
 Version:        0.1.0
 */
+/** Global **/
+body {
+    font-size: 14px;
+}
+.box-single .entry-title {
+    font-size: 18px;
+}
+.gridlove-related .entry-title a{
+    font-size: 14px;
+}
+.gridlove-posts-widget h6 {
+    height: 60px;
+    width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: pre;
+}
+
 
 /** Main Layouts - Layout A customized style **/
 .gridlove-post-a {

@@ -18,8 +18,8 @@
                 <?php endif; ?>
             </div>
             
-            <?php the_title( sprintf( '<h2 class="entry-title h3"><a href="%s">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
-            <div class="entry-content"><?php echo gridlove_get_excerpt(); ?></div>
+            <!--called by related.php-->
+            <?php gridlove_the_title( sprintf( '<h2 class="entry-title h3"><a href="%s">', esc_url( get_permalink() ) ), '</a></h2>' ); ?>
 
         </div>
   
