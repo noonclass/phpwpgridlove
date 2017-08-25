@@ -7,7 +7,7 @@ Author URI:     http://mekshq.com
 Template:       gridlove
 Version:        0.1.0
 */
-/** ias **/
+/** ias - 无限加载瀑布流样式 **/
 .gridlove-separator {
     border-top: 1px solid #ddd;
     height: 1px;
@@ -27,7 +27,8 @@ Version:        0.1.0
     background: #fff none repeat scroll 0 0;
 }
 
-/** Global **/
+
+/** Global - 全局样式 **/
 body {
     font-size: 14px;
 }
@@ -46,7 +47,8 @@ body {
 }
 
 
-/** Main Layouts - Layout A customized style **/
+/** Index Layout - 首页样式 **/
+/* Main Layouts - Layout A - customized style */
 .gridlove-post-a {
     height: auto;
     max-height: 370px;
@@ -62,7 +64,7 @@ body {
 	display: block;
 }
 
-/* Archive Templates 首页文章 post-a 布局 author 作者头像 顶部左对齐 */
+/* Main Layouts - Layout A - A布局样式 post-a 布局 author 作者头像 顶部左对齐 */
 .gridlove-post-a .entry-author {
     position: absolute;
     left: 30px;
@@ -85,7 +87,7 @@ body {
     width: 24px;
 }
 
-/* Archive Templates 首页文章 post-a 布局 cate&format 文章目录及格式 顶部右对齐 */
+/* Main Layouts - Layout A - A布局样式 post-a 布局 cate&format 文章目录及格式 顶部右对齐 */
 .gridlove-post-a .entry-category {
     position: absolute;
     right: 18px;
@@ -93,25 +95,28 @@ body {
     width: auto;
     z-index: 2;
 }
-.gridlove-post-a .entry-category > * {
+.entry-category > * {
     float: right;
 }
-.gridlove-post-a .gridlove-format-icon {
+.entry-category a {
+    margin-top: 10px;
+}
+.entry-category .gridlove-format-icon {
     background-color: transparent;
-    background-image: url("assets/img/sprite.png");
+    background-image: url("../img/sprite.png");
     background-position: -355px 0;
     background-repeat: no-repeat;
     height: 48px;
     width: 48px;
 }
-.gridlove-post-a .sprite-video{
+.entry-category .sprite-video{
    background-position: -301px -288px;
 }
-.gridlove-post-a .sprite-gallery{
+.entry-category .sprite-gallery{
     background-position: -355px -50px;
 }
 
-/* Archive Templates 首页文章 post-a 布局 meta 元信息 底部左对齐 */
+/* Main Layouts - Layout A - A布局样式 post-a 布局 meta 元信息 底部左对齐 */
 .gridlove-post-a  .box-inner-p {
     position: absolute;
     left: 0;
@@ -119,7 +124,7 @@ body {
     width: 100%;
 }
 .gridlove-post-a  .entry-meta {
-    position: static;/*默认值，元素使用正常的布局行为，即元素在文档流中当前的布局位置。静态定位的元素不会受到 top, bottom, left, right, z-index 影响。*/
+    position: static;/* NOTE::默认值，元素使用正常的布局行为，即元素在文档流中当前的布局位置。静态定位的元素不会受到 top, bottom, left, right, z-index 影响。 */
 }
 .gridlove-post-a .entry-meta .meta-likes span::before {
     color: #fff;
@@ -129,7 +134,8 @@ body {
     opacity: 0.67;
 }
 .entry-meta .meta-likes span::before,
-/********************************** single **************************************************/
+/** Single Layout - Layout 7 customized style **/
+/* Single Display 文章显示样式 entry-header 布局 header 文章标题 右侧sidebar小部件显示的标题样式 */
 .gridlove-sidebar .meta-location span::before {
     font-family: FontAwesome;
     margin-right: 4px;
@@ -141,25 +147,69 @@ body {
 .gridlove-sidebar .entry-header .entry-title {
     margin-bottom: 20px;
 }
+.gridlove-content .entry-header .entry-title  {
+    display: none;
+}
 
-/* 评论AJAX提示框 */
-.butter-bar{margin-left:36%;max-width:640px;position:fixed;text-align:center;top:0;width:58%;z-index:9001}
-.butter-bar-center{left:50%;margin-left:-320px}
-.butter-bar-message{background:rgba(255,102,102,.67);border-bottom-left-radius:4px;border-bottom-right-radius:4px;box-shadow:0 1px 1px rgba(0,0,0,.25),0 0 1px rgba(0,0,0,.35);display:inline-block;font-size:14px;margin-bottom:0;padding:12px 25px}
-/* hide respond-form */
-.hidden{display:none;}
-.respond-switch{color: #848d95;opacity: 0.6;}
-#comments .reply{display:none;}
-#comments .edit-link{display:none;}
+/* Single Display 文章显示样式 entry-header 布局 header 文章标题 左侧article正文显示的标题样式 */
+.gridlove-box .entry-category {
+    float: right;
+    margin-bottom: 0;
+}
+.gridlove-box .entry-header .entry-category a {
+    margin-top: 0;
+}
+.gridlove-box .entry-header .entry-category .gridlove-format-icon {
+    margin-top: -12px;
+}
 
-/* 视频  */
+/* Single Display 文章显示样式 AJAX comment 评论提交ajax交互顶部信息提示框 */
+.butter-bar {
+    margin-left: 36%;
+    max-width: 640px;
+    position: fixed;
+    text-align: center;
+    top: 0;
+    width: 58%;
+    z-index: 9001;
+}
+.butter-bar-center {
+    left: 50%;
+    margin-left: -320px;
+}
+.butter-bar-message {
+    background: rgba(255,102,102,.67);
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.25),0 0 1px rgba(0,0,0,.35);
+    display: inline-block;
+    font-size: 14px;
+    margin-bottom: 0;
+    padding: 12px 25px;
+}
+/* Single Display 文章显示样式 Hide respond-form 评论回复框默认隐藏 */
+.hidden {
+    display: none;
+}
+.respond-switch {
+    color: #848d95;
+    opacity: 0.6;
+}
+#comments .reply {
+    display: none;
+}
+#comments .edit-link {
+    display: none;
+}
+
+/* Single Display 文章显示样式 Video 默认视频尺寸设置  */
 .box-single .owl-video {
     width: 100%!important;
     height: 100%!important;
     max-width: 620px;
 }
 
-/** gallery images **/
+/* Single Display 文章显示样式 Gallery Images 鼠标悬停特效 */
 a.wplightbox {
     display: block;
     position: relative;
@@ -167,7 +217,7 @@ a.wplightbox {
 .butter-more {
 	width: 100%;
 	height: 100%;
-	background: url(assets/img/box_hover.png) no-repeat center;
+	background: url(../img/box_hover.png) no-repeat center;
 	display: block;
 	position: absolute;
 	top: 0px;
@@ -176,12 +226,27 @@ a.wplightbox {
 	opacity: 0;
 	filter: alpha(opacity =   0);
 }
-
 .butter-more .butter-icon {
 	width: 100%;
 	height: 100%;
 	position: absolute;
 	top: 0px;
 	left: 0px;
-	background: url(assets/img/box_hover_plus.png) no-repeat center;
+	background: url(../img/box_hover_plus.png) no-repeat center;
+}
+
+/** responsive for tablets and mobile devices. - 响应式布局 **/
+/* Mobiles General */
+.gridlove-author .col-sm-5 .avatar {
+    max-width: 50px;
+}
+
+/* Tablets General */
+@media (max-width: 1023px) {
+  .entry-title {
+    display: block!important;
+  }
+  .gridlove-sidebar {
+    display: none;
+  }
 }

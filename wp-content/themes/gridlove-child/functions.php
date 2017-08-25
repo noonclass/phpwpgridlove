@@ -537,7 +537,6 @@ function head_optmizer() {
         remove_action('wp_head', 'rel_canonical');
     }
     
-    
     //Remove WordPress Version			
     if($wpho_option_values['_wp_version'] == 1){
         remove_action('wp_head', 'wp_generator');
@@ -610,5 +609,17 @@ function custom_upload_directory( $uploads ) {
     return $uploads;
 }
 add_filter( 'upload_dir', 'custom_upload_directory' );
+
+// SEO for paged comments
+function canonical_for_comments() {
+    if ( function_exists('get_query_var') ) {
+        $cpage = intval(get_query_var('cpage'));
+        if ( ! empty( $cpage ) ) {
+            $output = sprintf('<link rel="canonical" href="%s">', get_permalink());
+            echo $output;
+        }
+    }
+}
+add_action( 'wp_head', 'canonical_for_comments' );
 
 ?>

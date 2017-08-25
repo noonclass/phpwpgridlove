@@ -158,7 +158,7 @@ return t.apply(e,arguments)}}function a(){this.onload=null,e(t).addClass(d[2]),r
             });
         }
         
-        $(".entry-content").mCustomScrollbar({setHeight: 650, theme: "minimal-dark"});
+        $(".entry-content").mCustomScrollbar({setHeight: $(".entry-content").width(), theme: "minimal-dark"});//自适应父容器的大小
         $(".comment-list").mCustomScrollbar({
             setHeight: 650, 
             theme: "rounded-dots-dark",

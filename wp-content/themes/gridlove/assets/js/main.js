@@ -549,7 +549,7 @@
                         $(this).css('min-height', '1px');
                     });
 
-                    $(".gridlove-sticky-share").prependTo('.box-single .entry-content');
+                    $(".gridlove-sticky-share").prependTo('.box-single .entry-header');
 
 
                     $(".gridlove-sticky-share").trigger("sticky_kit:detach");
