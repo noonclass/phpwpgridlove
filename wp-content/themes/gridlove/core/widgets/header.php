@@ -10,13 +10,13 @@ Version: 1.0
 ?>
 <?php
 
-class GRIDLOVE_Cover_Widget extends WP_Widget {
+class GRIDLOVE_Header_Widget extends WP_Widget {
     var $defaults;
     
     function __construct(){
-		$widget_ops = array( 'classname' => 'gridlove_cover_widget', 'description' => esc_html__('Display your post header with this widget', 'gridlove') );
-		$control_ops = array( 'id_base' => 'gridlove_cover_widget' );
-		parent::__construct( 'gridlove_cover_widget', esc_html__('Gridlove Cover', 'gridlove'), $widget_ops, $control_ops );
+		$widget_ops = array( 'classname' => 'gridlove_header_widget', 'description' => esc_html__('Display your post header with this widget', 'gridlove') );
+		$control_ops = array( 'id_base' => 'gridlove_header_widget' );
+		parent::__construct( 'gridlove_header_widget', esc_html__('Gridlove Header', 'gridlove'), $widget_ops, $control_ops );
 
 		$this->defaults = array( 
 				'title' => ''

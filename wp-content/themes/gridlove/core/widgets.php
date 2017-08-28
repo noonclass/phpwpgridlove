@@ -13,16 +13,15 @@ add_action( 'widgets_init', 'gridlove_register_widgets' );
 if ( !function_exists( 'gridlove_register_widgets' ) ) :
 	function gridlove_register_widgets() {
 		
-		include_once get_template_directory() .'/core/widgets/cover.php';
 		include_once get_template_directory() .'/core/widgets/posts.php';
 		include_once get_template_directory() .'/core/widgets/adsense.php';
 		include_once get_template_directory() .'/core/widgets/categories.php';
+        include_once get_template_directory() .'/core/widgets/header.php';
 		
-		register_widget( 'GRIDLOVE_Cover_Widget' );
 		register_widget( 'GRIDLOVE_Posts_Widget' );
 		register_widget( 'GRIDLOVE_Adsense_Widget' );
 		register_widget( 'GRIDLOVE_Category_Widget' );
-
+        register_widget( 'GRIDLOVE_Header_Widget' );
 	}
 endif;
 
